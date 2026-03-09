@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huy Nguyen — Principal Full-Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #070b0f;
+  --bg2:       #0c1218;
+  --bg3:       #101820;
+  --neon-g:    #00ff9d;
+  --neon-c:    #00e5ff;
+  --neon-m:    #ff2d78;
+  --neon-y:    #f5e642;
+  --text:      #c8dde8;
+  --text-dim:  #506070;
+  --border:    #1a2d3a;
+  --border-hi: #1e3d50;
+  --glow-g:    0 0 8px #00ff9d88, 0 0 24px #00ff9d33;
+  --glow-c:    0 0 8px #00e5ff88, 0 0 24px #00e5ff33;
+  --glow-m:    0 0 8px #ff2d7888, 0 0 24px #ff2d7833;
+}
+
+html { font-size: 21px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 300;
+  line-height: 1.65;
+  min-height: 100vh;
+  cursor: crosshair;
+}
+
+/* Scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* CRT flicker */
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.96; }
+  94% { opacity: 1; }
+  96% { opacity: 0.98; }
+}
+body { animation: flicker 8s infinite; }
+
+/* ── PAGE WRAPPER ── */
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  margin-bottom: 0;
+}
+
+.topbar .status {
+  color: var(--neon-g);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--neon-g);
+  box-shadow: var(--glow-g);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ── HEADER ── */
+header {
+  padding: 48px 0 36px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeDown 0.6s ease both;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -40px; right: -40px; bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 10% 50%, #00ff9d0a 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 30%, #00e5ff08 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.header-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+  position: relative;
+}
+
+.name-stack {}
+
+.name-prefix {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--neon-g);
+  text-shadow: var(--glow-g);
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-shadow: 0 0 30px #00e5ff44;
+}
+
+h1 span {
+  color: var(--neon-c);
+  text-shadow: var(--glow-c);
+}
+
+.title-line {
+  margin-top: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.title-line strong {
+  color: var(--neon-m);
+  font-weight: 400;
+  text-shadow: var(--glow-m);
+}
+
+.contact-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border-hi);
+  padding: 16px 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  line-height: 2;
+  color: var(--text-dim);
+  position: relative;
+}
+
+.contact-panel::before {
+  content: '// CONTACT';
+  position: absolute;
+  top: -9px; left: 12px;
+  background: var(--bg);
+  padding: 0 6px;
+  font-size: 0.58rem;
+  color: var(--neon-c);
+  letter-spacing: 0.15em;
+}
+
+.contact-panel a {
+  color: var(--neon-c);
+  text-decoration: none;
+  transition: text-shadow 0.2s;
+}
+.contact-panel a:hover { text-shadow: var(--glow-c); }
+
+.contact-panel .val { color: var(--text); }
+
+/* ── STAT ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 48px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.stat-cell {
+  background: var(--bg2);
+  padding: 16px 20px;
+  text-align: center;
+  transition: background 0.2s;
+}
+.stat-cell:hover { background: var(--bg3); }
+
+.stat-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--neon-g);
+  text-shadow: var(--glow-g);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.sec-head-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon-g);
+  text-shadow: var(--glow-g);
+  white-space: nowrap;
+}
+
+.sec-head-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--neon-g) 0%, var(--border) 60%, transparent 100%);
+}
+
+.sec-head-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+}
+
+/* ── SUMMARY ── */
+.summary-block {
+  background: var(--bg2);
+  border-left: 3px solid var(--neon-g);
+  padding: 20px 24px;
+  margin-bottom: 48px;
+  position: relative;
+  animation: fadeUp 0.6s 0.3s ease both;
+  box-shadow: inset 0 0 40px #00ff9d05;
+}
+
+.summary-block p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.summary-block .highlight {
+  color: var(--neon-c);
+  font-weight: 600;
+}
+
+.summary-block .accent {
+  color: var(--neon-g);
+  font-weight: 600;
+}
+
+/* ── TWO-COLUMN BODY ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+/* ── JOB CARDS ── */
+.exp-block { margin-bottom: 32px; animation: fadeUp 0.6s ease both; }
+.exp-block:nth-child(1) { animation-delay: 0.1s; }
+.exp-block:nth-child(2) { animation-delay: 0.2s; }
+.exp-block:nth-child(3) { animation-delay: 0.3s; }
+.exp-block:nth-child(4) { animation-delay: 0.4s; }
+
+.job-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--neon-c);
+  padding: 20px 22px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  position: relative;
+}
+
+.job-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #00e5ff04 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.job-card:hover {
+  border-color: var(--neon-c);
+  box-shadow: 0 0 20px #00e5ff11, inset 0 0 30px #00e5ff06;
+}
+
+.job-card.accent-m { border-left-color: var(--neon-m); }
+.job-card.accent-m:hover { box-shadow: 0 0 20px #ff2d7811, inset 0 0 30px #ff2d7806; }
+
+.job-card.accent-y { border-left-color: var(--neon-y); }
+.job-card.accent-y:hover { box-shadow: 0 0 20px #f5e64211, inset 0 0 30px #f5e64206; }
+
+.job-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.job-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.job-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--bg);
+  background: var(--neon-c);
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.job-card.accent-m .job-badge { background: var(--neon-m); }
+.job-card.accent-y .job-badge { background: var(--neon-y); }
+
+.job-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.job-meta .company { color: var(--neon-c); }
+.job-card.accent-m .job-meta .company { color: var(--neon-m); }
+.job-card.accent-y .job-meta .company { color: var(--neon-y); }
+
+.job-bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.job-bullets li {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  padding: 4px 0 4px 18px;
+  position: relative;
+  color: var(--text);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.job-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--neon-g);
+  font-size: 0.7rem;
+  top: 6px;
+}
+
+.job-bullets li:hover {
+  color: #fff;
+  border-bottom-color: var(--border);
+}
+
+.job-bullets li strong {
+  color: var(--neon-c);
+  font-weight: 600;
+}
+
+.job-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.jt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border: 1px solid var(--border-hi);
+  color: var(--text-dim);
+  transition: all 0.2s;
+}
+
+.jt:hover {
+  border-color: var(--neon-g);
+  color: var(--neon-g);
+  text-shadow: var(--glow-g);
+}
+
+/* ── SIDEBAR PANELS ── */
+.side-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  animation: fadeLeft 0.6s ease both;
+}
+
+.side-panel::before {
+  content: attr(data-label);
+  position: absolute;
+  top: -9px; left: 12px;
+  background: var(--bg);
+  padding: 0 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: var(--neon-c);
+}
+
+.side-panel:nth-child(1) { animation-delay: 0.1s; border-left: 2px solid var(--neon-g); }
+.side-panel:nth-child(2) { animation-delay: 0.2s; border-left: 2px solid var(--neon-c); }
+.side-panel:nth-child(3) { animation-delay: 0.3s; border-left: 2px solid var(--neon-m); }
+.side-panel:nth-child(4) { animation-delay: 0.4s; border-left: 2px solid var(--neon-y); }
+
+/* Skill bars */
+.skill-bar-row {
+  margin-bottom: 9px;
+}
+
+.skill-bar-top {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-bottom: 3px;
+}
+
+.skill-bar-top .name { color: var(--text); }
+.skill-bar-track {
+  height: 3px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--neon-g), var(--neon-c));
+  box-shadow: 0 0 6px #00ff9d66;
+  width: 0;
+  animation: fillBar 1s ease forwards;
+}
+
+@keyframes fillBar {
+  to { width: var(--pct); }
+}
+
+/* Tag clouds */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.ntag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border: 1px solid var(--border-hi);
+  color: var(--text-dim);
+  cursor: default;
+  transition: all 0.18s;
+}
+
+.ntag:hover {
+  border-color: var(--neon-c);
+  color: var(--neon-c);
+  background: #00e5ff0a;
+}
+
+.ntag.g { border-color: #00ff9d33; color: var(--neon-g); }
+.ntag.c { border-color: #00e5ff33; color: var(--neon-c); }
+.ntag.m { border-color: #ff2d7833; color: var(--neon-m); }
+.ntag.y { border-color: #f5e64233; color: var(--neon-y); }
+
+/* ── FULL-WIDTH SECTIONS ── */
+.full-section { margin-bottom: 48px; animation: fadeUp 0.6s ease both; }
+
+/* Early career grid */
+.early-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.early-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--neon-m);
+  padding: 16px 18px;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+
+.early-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 60px; height: 60px;
+  background: radial-gradient(circle at bottom right, #ff2d7808, transparent 70%);
+}
+
+.early-card:hover {
+  border-top-color: var(--neon-c);
+  box-shadow: 0 0 16px #00e5ff0d;
+}
+
+.early-card-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.early-card-co {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--neon-m);
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+}
+
+.early-card-body {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Achievements */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ach-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 20px 18px;
+  text-align: center;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+
+.ach-card:hover {
+  background: var(--bg3);
+  box-shadow: 0 0 20px #00ff9d0d;
+}
+
+.ach-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.ach-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--neon-g);
+  text-shadow: var(--glow-g);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+.ach-desc {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Education */
+.edu-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--neon-y);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  transition: box-shadow 0.2s;
+}
+.edu-card:hover { box-shadow: 0 0 20px #f5e64211; }
+
+.edu-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.edu-degree {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--neon-y);
+  margin-top: 4px;
+}
+
+.edu-period {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+footer span { color: var(--neon-g); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── PRINT ── */
+@media print {
+  body::after { display: none; }
+  .job-card:hover, .early-card:hover { box-shadow: none; }
+}
+
+@media (max-width: 720px) {
+  html { font-size: 16px; }
+
+  .page { padding: 0 14px 60px; }
+
+  /* Top bar: stack vertically, hide middle item */
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 0;
+  }
+  .topbar .status { order: -1; }
+
+  /* Header: single column, contact panel full width */
+  .header-inner { grid-template-columns: 1fr; gap: 20px; }
+  .contact-panel { width: 100%; }
+  .name-prefix { font-size: 0.55rem; letter-spacing: 0.15em; word-break: break-word; }
+
+  /* Stats: 2x2 grid */
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+
+  /* Section headings: allow wrapping */
+  .sec-head { flex-wrap: wrap; gap: 8px; }
+  .sec-head-label { font-size: 0.62rem; letter-spacing: 0.12em; white-space: normal; }
+  .sec-head-line { display: none; }
+
+  /* Two-col experience + sidebar: stack */
+  .two-col { grid-template-columns: 1fr; gap: 24px; }
+
+  /* Sidebar panels move below experience, full width */
+  aside { width: 100%; }
+
+  /* Early career + achievements: single column */
+  .early-grid { grid-template-columns: 1fr; }
+  .achievements-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Leadership grid: single column */
+  .leadership-grid { grid-template-columns: 1fr !important; }
+
+  /* Education card: stack */
+  .edu-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .edu-period { text-align: left; }
+
+  /* Footer: stack */
+  footer { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  /* Job cards: tighten padding */
+  .job-card { padding: 14px 14px; }
+  .job-title { font-size: 0.78rem; }
+
+  /* Summary */
+  .summary-block { padding: 14px 16px; }
+  .summary-block p { font-size: 0.82rem; }
+}
+
+@media (max-width: 420px) {
+  .achievements-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOP STATUS BAR -->
+  <div class="topbar">
+    <span>CV_HUY-NGUYEN.DOC // REV_NEO</span>
+    <span class="status"><span class="dot"></span> AVAILABLE FOR SENIOR / PRINCIPAL ROLES</span>
+    <span>HANOI, VN · REMOTE</span>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="name-stack">
+        <div class="name-prefix">// PROFILE_INIT :: ENGINEER_CLASS=PRINCIPAL</div>
+        <h1>HUY <span>(QUOC)</span><br>NGUYEN</h1>
+        <div class="title-line">
+          <strong>Principal · Lead Full-Stack Engineer</strong>
+          &nbsp;·&nbsp; 14+ Years Delivering High-Impact Systems
+        </div>
+      </div>
+      <div class="contact-panel">
+        <div><span style="color:var(--neon-g)">PHONE</span> &nbsp;<span class="val">(+84) 904 110 904</span></div>
+        <div><span style="color:var(--neon-g)">LOC  </span> &nbsp;<span class="val">Hanoi, Vietnam</span></div>
+        <div><span style="color:var(--neon-g)">LNK  </span> &nbsp;<a href="https://www.linkedin.com/in/huy-nguyen-944824102/">https://www.linkedin.com/in/huy-nguyen-944824102/</a></div>
+        <div><span style="color:var(--neon-g)">GIT  </span> &nbsp;<a href="https://github.com/huynguyenquoc">https://github.com/huynguyenquoc</a></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="stat-num">14+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">150+</div>
+      <div class="stat-label">Eng Org Scale</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">ZERO</div>
+      <div class="stat-label">Production Incidents</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Unicorn Built</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sec-head">
+    <div class="sec-head-label">// EXECUTIVE SUMMARY</div>
+    <div class="sec-head-line"></div>
+    <div class="sec-head-num">[01]</div>
+  </div>
+  <div class="summary-block">
+    <p>
+      Principal-level full-stack engineer with <span class="accent">14+ years</span> delivering high-impact systems at scale across fintech, creative marketplaces, and enterprise domains.
+      Pioneered <span class="highlight">early Webpack 5 Module Federation</span> adoption in a <span class="accent">150+ engineer organization</span>, successfully decomposing a large monolith React SPA into independent micro frontends with <span class="highlight">zero production incidents</span>.
+      Excel at <span class="accent">performance-critical frontend architecture</span>, modern Node/TypeScript backends, cloud-native delivery, and mentoring teams through complex migrations.
+      Proven ability to balance technical excellence with business velocity. Actively sought for expertise in <span class="highlight">evolving frontend ecosystems, RAG/AI pipelines</span>, and distributed systems architecture.
+      Known for writing high-quality code daily while simultaneously owning team leadership, cross-org standards, and infrastructure.
+    </p>
+  </div>
+
+  <!-- KEY ACHIEVEMENTS -->
+  <div class="sec-head">
+    <div class="sec-head-label">// KEY ACHIEVEMENTS</div>
+    <div class="sec-head-line"></div>
+    <div class="sec-head-num">[02]</div>
+  </div>
+  <div class="achievements-grid" style="margin-bottom: 48px;">
+    <div class="ach-card">
+      <span class="ach-icon">⚡</span>
+      <div class="ach-title">ZERO INCIDENTS</div>
+      <div class="ach-desc">Shipped production Micro Frontend architecture at Xendit across a 150-engineer org with zero post-launch production incidents.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🗄️</span>
+      <div class="ach-title">CMS ARCHITECT</div>
+      <div class="ach-desc">Deep customization of Sitecore, Episerver, Umbraco, Wagtail, Sanity, and Strapi across enterprise and startup stacks — extending APIs, optimizing indexing, and owning full CMS ecosystems end-to-end.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🚀</span>
+      <div class="ach-title">EARLY ADOPTER</div>
+      <div class="ach-desc">Among the first engineers globally to ship Webpack 5 Module Federation in production — during its early beta era in 2021.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🏗️</span>
+      <div class="ach-title">MONOLITH → MFE</div>
+      <div class="ach-desc">Decomposed a CRA monolith SPA into independently deployable MFE modules, unlocking true team autonomy and accelerated feature velocity.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">📦</span>
+      <div class="ach-title">BUNDLE PERF</div>
+      <div class="ach-desc">Led org-wide bundle optimization program at Xendit using lazy-loading, tree-shaking & code splitting across merchant dashboard.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🌐</span>
+      <div class="ach-title">MULTI-DOMAIN</div>
+      <div class="ach-desc">Delivered high-impact solutions across fintech unicorns, creative asset marketplaces, loyalty platforms, and enterprise CMS at global scale.</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE + SIDEBAR -->
+  <div class="sec-head">
+    <div class="sec-head-label">// PROFESSIONAL EXPERIENCE</div>
+    <div class="sec-head-line"></div>
+    <div class="sec-head-num">[03]</div>
+  </div>
+
+  <div class="two-col">
+    <!-- EXPERIENCE COLUMN -->
+    <div>
+      <!-- Envato -->
+      <div class="exp-block">
+        <div class="job-card">
+          <div class="job-top">
+            <div class="job-title">Lead Engineer</div>
+            <div class="job-badge">MOST RECENT</div>
+          </div>
+          <div class="job-meta">
+            <span class="company">ENVATO · Creative Asset Marketplace</span>
+            <span>SEP 2024 – DEC 2025</span>
+            <span>REMOTE</span>
+          </div>
+          <ul class="job-bullets">
+            <li>Lead agile team as <strong>Scrum Master</strong>; facilitate all ceremonies, drive RFC process for new product features, and actively mentor engineers at all seniority levels.</li>
+            <li>Hands-on development of core CMS/product workflows using <strong>Node.js, Ruby on Rails, PostgreSQL, Tailwind CSS</strong>, and Docker in a high-traffic creative ecosystem.</li>
+            <li>Designed and implemented <strong>RAG pipeline</strong> exposing OpenSearch-indexed content via OpenAPI spec; enabled recursive LLM training and delivered measurable search relevance improvements.</li>
+            <li>Lead intensive code reviews ensuring architectural consistency and production quality; 24/7 on-call hotfix support on bi-weekly rotation.</li>
+            <li>Infrastructure monitoring and incident management via <strong>AWS, DataDog, Rollbar</strong>; maintain production stability under high traffic load.</li>
+            <li>Deliver pixel-perfect frontend implementations daily while simultaneously owning team and architecture direction.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="jt">Node.js</span><span class="jt">Ruby on Rails</span><span class="jt">PostgreSQL</span>
+            <span class="jt">OpenSearch</span><span class="jt">RAG</span><span class="jt">OpenAPI</span>
+            <span class="jt">Tailwind</span><span class="jt">Docker</span><span class="jt">AWS</span>
+            <span class="jt">DataDog</span><span class="jt">Scrum</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Xendit -->
+      <div class="exp-block">
+        <div class="job-card accent-m">
+          <div class="job-top">
+            <div class="job-title">Frontend Consultant / Lead</div>
+            <div class="job-badge">UNICORN</div>
+          </div>
+          <div class="job-meta">
+            <span class="company">XENDIT · Fintech Unicorn (Series B → Unicorn)</span>
+            <span>MAR 2021 – MAR 2024</span>
+            <span>REMOTE</span>
+          </div>
+          <ul class="job-bullets">
+            <li>Architected and shipped <strong>production-grade Micro Frontends</strong> using Webpack 5 Module Federation (early beta era) on a CRA-based monolith React SPA; decomposed large frontend into independently deployable modules for a 150+ engineer organization.</li>
+            <li>Achieved <strong>zero production incidents</strong> post-launch; enabled true team autonomy, reduced cross-team dependencies, accelerated feature velocity, and simplified React version upgrades across all modules.</li>
+            <li>Led org-wide <strong>frontend standards</strong>, technical roadmap, and performance programme; owned merchant dashboard optimizations including bundle size reduction, lazy-loading, and tree-shaking.</li>
+            <li>Mentored engineers on modern tooling: <strong>webpack, Vite, Rollup</strong>; conducted all frontend PR reviews and architectural consultations across multiple product squads.</li>
+            <li>Delivered daily coding and UI/UX guidance; oversaw Microservices/Micro Frontends integrations on <strong>AWS</strong> infrastructure.</li>
+            <li>Maintained and published internal component library; established shared design token system across independent MFE modules.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="jt">React</span><span class="jt">Webpack 5</span><span class="jt">Module Federation</span>
+            <span class="jt">TypeScript</span><span class="jt">Vite</span><span class="jt">Rollup</span>
+            <span class="jt">AWS</span><span class="jt">Terraform</span><span class="jt">Microservices</span>
+            <span class="jt">Storybook</span><span class="jt">Nx</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform of Trust -->
+      <div class="exp-block">
+        <div class="job-card accent-y">
+          <div class="job-top">
+            <div class="job-title">Web/UX Lead &amp; Solution Architect</div>
+            <div class="job-badge">LEAD</div>
+          </div>
+          <div class="job-meta">
+            <span class="company">PLATFORM OF TRUST</span>
+            <span>AUG 2020 – APR 2021</span>
+          </div>
+          <ul class="job-bullets">
+            <li>Led <strong>6-person team</strong> owning full CMS ecosystem (Django/Wagtail) and landing portal; end-to-end ownership including DevOps, third-party integrations, and CRM syncs.</li>
+            <li>Delivered reliable, high-customization CMS features significantly reducing integration overhead for data harmonization platform serving enterprise clients.</li>
+            <li>Established frontend architecture patterns, code review culture, and sprint cadence for the web/UX development team.</li>
+            <li>Managed cloud infrastructure, automated deployments, and third-party service integrations across <strong>Django, Python, and React</strong> stack.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="jt">Django</span><span class="jt">Wagtail</span><span class="jt">Python</span>
+            <span class="jt">React</span><span class="jt">Azure</span><span class="jt">HubSpot</span><span class="jt">ZenDesk</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <!-- Core Skills -->
+      <div class="side-panel" data-label="// CORE SKILLS">
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">React / Next.js</span><span>98%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:98%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">TypeScript</span><span>95%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:95%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">Node.js / NestJS</span><span>92%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:92%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">Webpack / MFE</span><span>98%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:98%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">AWS / DevOps</span><span>85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:85%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">Python / Django</span><span>78%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:78%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="name">.NET Core</span><span>80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:80%"></div></div>
+        </div>
+      </div>
+
+      <!-- Frontend -->
+      <div class="side-panel" data-label="// FRONTEND">
+        <div class="tag-cloud">
+          <span class="ntag g">React</span>
+          <span class="ntag g">Next.js</span>
+          <span class="ntag g">TypeScript</span>
+          <span class="ntag c">Webpack 5</span>
+          <span class="ntag c">Module Federation</span>
+          <span class="ntag c">Vite</span>
+          <span class="ntag">Rollup</span>
+          <span class="ntag">SSR / SSG</span>
+          <span class="ntag">PWA</span>
+          <span class="ntag">Storybook</span>
+          <span class="ntag">Lerna / Nx Monorepos</span>
+          <span class="ntag">Micro Frontends</span>
+          <span class="ntag">Tailwind CSS</span>
+        </div>
+      </div>
+
+      <!-- Backend & Infra -->
+      <div class="side-panel" data-label="// BACKEND & INFRA">
+        <div class="tag-cloud">
+          <span class="ntag g">Node.js</span>
+          <span class="ntag g">NestJS</span>
+          <span class="ntag g">Express</span>
+          <span class="ntag m">.NET Core</span>
+          <span class="ntag m">Django</span>
+          <span class="ntag m">Flask</span>
+          <span class="ntag m">Ruby on Rails</span>
+          <span class="ntag c">AWS</span>
+          <span class="ntag c">Terraform</span>
+          <span class="ntag c">Docker</span>
+          <span class="ntag">Buildkite / Buddy / Jenkins</span>
+          <span class="ntag">Microservices</span>
+          <span class="ntag">Serverless</span>
+          <span class="ntag">OpenAPI</span>
+        </div>
+      </div>
+
+      <!-- Data -->
+      <div class="side-panel" data-label="// DATA & CMS">
+        <div class="tag-cloud">
+          <span class="ntag g">PostgreSQL</span>
+          <span class="ntag g">MongoDB</span>
+          <span class="ntag c">OpenSearch</span>
+          <span class="ntag c">Neo4j</span>
+          <span class="ntag c">RAG Pipelines</span>
+          <span class="ntag">Sanity</span>
+          <span class="ntag">Payload</span>
+          <span class="ntag">Strapi</span>
+          <span class="ntag m">Sitecore</span>
+          <span class="ntag m">Episerver</span>
+          <span class="ntag m">Umbraco</span>
+          <span class="ntag">Wagtail</span>
+          <span class="ntag">Solr / Lucene</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- EARLIER CAREER -->
+  <div class="sec-head">
+    <div class="sec-head-label">// EARLIER CAREER HIGHLIGHTS</div>
+    <div class="sec-head-line"></div>
+    <div class="sec-head-num">[04] 2011–2020</div>
+  </div>
+  <div class="full-section">
+    <div class="early-grid">
+      <div class="early-card">
+        <div class="early-card-title">Sitecore Technical Lead</div>
+        <div class="early-card-co">AKQA · AustralianSuper · 2017–2018</div>
+        <div class="early-card-body">Led 6-person team migrating legacy intranet to Azure-hosted Sitecore microservices portal with React frontend. Managed blue/green releases, Azure infrastructure provisioning, and Dynatrace monitoring. Introduced CI/CD pipelines and owned all technical pre-sales.</div>
+      </div>
+      <div class="early-card">
+        <div class="early-card-title">Head of Development</div>
+        <div class="early-card-co">Changi Transit Privileges · 2019–2020</div>
+        <div class="early-card-body">Full-cycle delivery of integrated loyalty subsystem with Ascentis CRM integration on .NET Core + React + AWS stack. Owned architecture, team, and client stakeholder communications throughout engagement.</div>
+      </div>
+      <div class="early-card">
+        <div class="early-card-title">Enterprise CMS Architect</div>
+        <div class="early-card-co">SmartOSC · CMC Global · Freelance</div>
+        <div class="early-card-body">Deep customization of Sitecore, Episerver/Optimizely, and Umbraco—extended DLLs, optimized Solr/Lucene indexing, built REST APIs, and led pre-sales solution architecture for large enterprise clients across multiple industries.</div>
+      </div>
+      <div class="early-card">
+        <div class="early-card-title">Algorithm & Full-Stack Engineer</div>
+        <div class="early-card-co">VC Corp · SAVAI · 2011–2015</div>
+        <div class="early-card-body">Built scalable content systems incorporating NLP tokenization and data mining pipelines on gigabyte-scale datasets. Integrated payment gateways and migrated legacy ASP applications to modern .NET stack.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP & APPROACH -->
+  <div class="sec-head">
+    <div class="sec-head-label">// LEADERSHIP &amp; WORKING STYLE</div>
+    <div class="sec-head-line"></div>
+    <div class="sec-head-num">[05]</div>
+  </div>
+  <div class="full-section">
+    <div class="leadership-grid" style="display: grid; grid-template-columns: repeat(3,1fr); gap:12px;">
+      <div class="side-panel" data-label="// TEAM LEADERSHIP" style="position:relative; margin-bottom:0;">
+        <p style="font-size:0.8rem; color:var(--text); line-height:1.7; margin-top:8px;">Experienced Scrum Master and engineering lead. Facilitates ceremonies, mentors engineers across seniority levels, drives RFCs, and balances technical debt with shipping velocity.</p>
+      </div>
+      <div class="side-panel" data-label="// TECHNICAL VISION" style="position:relative; margin-bottom:0; border-left:2px solid var(--neon-m);">
+        <p style="font-size:0.8rem; color:var(--text); line-height:1.7; margin-top:8px;">Architects for the long term. Prioritizes developer experience, clear boundaries, and incremental migration paths. Avoids big-bang rewrites; favors strangler fig and module-by-module decomposition.</p>
+      </div>
+      <div class="side-panel" data-label="// DAILY PRACTICE" style="position:relative; margin-bottom:0; border-left:2px solid var(--neon-y);">
+        <p style="font-size:0.8rem; color:var(--text); line-height:1.7; margin-top:8px;">Ships production code daily alongside architecture and leadership. Deep reviewer of PRs across teams. On-call rotation owner. Writes documentation and drives engineering culture.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="sec-head">
+    <div class="sec-head-label">// EDUCATION</div>
+    <div class="sec-head-line"></div>
+    <div class="sec-head-num">[06]</div>
+  </div>
+  <div class="full-section">
+    <div class="edu-card">
+      <div>
+        <div class="edu-title">FPT UNIVERSITY</div>
+        <div class="edu-degree">Bachelor of Science — Computer Science</div>
+      </div>
+      <div class="edu-period">
+        <div>2009 – 2012</div>
+        <div style="color:var(--neon-y); margin-top:4px;">HANOI, VIETNAM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>HUY_NGUYEN.CV // 2026</span>
+    <span>SENIOR/PRINCIPAL · FULL-STACK
