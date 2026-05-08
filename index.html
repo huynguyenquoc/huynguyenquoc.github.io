@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Huy Nguyen — Principal Full-Stack Engineer</title>
+    <title>Huy Nguyen — Frontend Platform Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
       href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap"
       rel="stylesheet">
+    <script
+      src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -27,6 +29,23 @@
   --glow-g:    0 0 8px #00ff9d88, 0 0 24px #00ff9d33;
   --glow-c:    0 0 8px #00e5ff88, 0 0 24px #00e5ff33;
   --glow-m:    0 0 8px #f0a50088, 0 0 24px #f0a50033;
+}
+
+:root.light {
+  --bg:        #faf8f4;
+  --bg2:       #fffff8;
+  --bg3:       #f0ede6;
+  --neon-g:    #156638;
+  --neon-c:    #174e96;
+  --neon-m:    #a05200;
+  --neon-y:    #2e3d5e;
+  --text:      #0a0e18;
+  --text-dim:  #3e4a5c;
+  --border:    #d8d2c8;
+  --border-hi: #bdb6aa;
+  --glow-g:    none;
+  --glow-c:    none;
+  --glow-m:    none;
 }
 
 html { font-size: 21px; scroll-behavior: smooth; }
@@ -148,9 +167,11 @@ h1 {
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: var(--text);
   text-shadow: 0 0 30px #00e5ff44;
 }
+
+:root.light h1 { text-shadow: none; }
 
 h1 span {
   color: var(--neon-c);
@@ -186,7 +207,7 @@ h1 span {
   content: '// CONTACT';
   position: absolute;
   top: -9px; left: 12px;
-  background: var(--bg);
+  background: var(--bg2);
   padding: 0 6px;
   font-size: 0.58rem;
   color: var(--neon-c);
@@ -353,7 +374,7 @@ h1 span {
   font-family: 'Orbitron', monospace;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
   letter-spacing: 0.04em;
 }
 
@@ -409,8 +430,9 @@ h1 span {
 }
 
 .job-bullets li:hover {
-  color: #fff;
+  color: var(--text);
   border-bottom-color: var(--border);
+  filter: brightness(1.15);
 }
 
 .job-bullets li strong {
@@ -432,8 +454,8 @@ h1 span {
   font-size: 0.65rem;
   letter-spacing: 0.08em;
   padding: 2px 8px;
-  border: 1px solid var(--border-hi);
-  color: var(--text-dim);
+  border: 1px solid color-mix(in srgb, var(--neon-g) 25%, var(--border-hi));
+  color: var(--text);
   transition: all 0.2s;
 }
 
@@ -457,7 +479,7 @@ h1 span {
   content: attr(data-label);
   position: absolute;
   top: -9px; left: 12px;
-  background: var(--bg);
+  background: var(--bg2);
   padding: 0 6px;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.58rem;
@@ -566,7 +588,7 @@ h1 span {
   font-family: 'Orbitron', monospace;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
   margin-bottom: 2px;
 }
 
@@ -588,6 +610,7 @@ h1 span {
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
   gap: 12px;
 }
 
@@ -607,9 +630,17 @@ h1 span {
 }
 
 .ach-icon {
-  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
   margin-bottom: 8px;
-  display: block;
+  line-height: 1;
+}
+
+.ach-icon svg {
+  width: 36px;
+  height: 36px;
+  color: var(--neon-c);
+  stroke: var(--neon-c);
 }
 
 .ach-title {
@@ -646,7 +677,7 @@ h1 span {
   font-family: 'Orbitron', monospace;
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
 }
 
 .edu-degree {
@@ -691,6 +722,45 @@ footer span { color: var(--neon-g); }
   from { opacity: 0; transform: translateX(16px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-hi);
+  color: var(--text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.theme-toggle:hover {
+  border-color: var(--neon-c);
+  color: var(--neon-c);
+}
+
+/* ── LIGHT MODE OVERRIDES ── */
+:root.light body::after { opacity: 0; }
+:root.light body { animation: none; font-weight: 300; }
+:root.light .ntag { background: var(--bg3); }
+:root.light .ntag.g { border-color: #15663866; color: #156638; }
+:root.light .ntag.c { border-color: #174e9666; color: #174e96; }
+:root.light .ntag.m { border-color: #a0520066; color: #a05200; }
+:root.light .ntag.y { border-color: #2e3d5e66; color: #2e3d5e; }
+:root.light .skill-bar-fill { box-shadow: none; }
+:root.light .job-card::before { background: none; }
+:root.light .summary-block { box-shadow: none; }
+:root.light .jt { background: var(--bg3); }
+:root.light .job-card { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+:root.light .job-card:hover { box-shadow: 0 3px 12px rgba(23,78,150,0.14); }
+:root.light .side-panel { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+:root.light .early-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+:root.light .ach-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+:root.light .early-card::after { background: none; }
+:root.light .job-card.accent-y:hover { box-shadow: 0 3px 12px rgba(58,74,106,0.12); }
+:root.light .summary-block { border-left-color: var(--neon-g); background: var(--bg2); }
 
 /* ── PRINT ── */
 @media print {
@@ -766,9 +836,13 @@ footer span { color: var(--neon-g); }
       <!-- TOP STATUS BAR -->
       <div class="topbar">
         <span>CV_HUY-NGUYEN.DOC // REV_NEO</span>
-        <span class="status"><span class="dot"></span> AVAILABLE FOR SENIOR /
-          PRINCIPAL ROLES</span>
-        <span>HANOI, VN · REMOTE</span>
+        <span class="status"><span class="dot"></span> AVAILABLE · SENIOR
+          FRONTEND ENGINEER</span>
+        <span style="display:flex;align-items:center;gap:12px;">
+          <span>HANOI, VN · REMOTE</span>
+          <button class="theme-toggle" id="themeToggle"
+            aria-label="Toggle theme">◑ LIGHT</button>
+        </span>
       </div>
 
       <!-- HEADER -->
@@ -776,11 +850,11 @@ footer span { color: var(--neon-g); }
         <div class="header-inner">
           <div class="name-stack">
             <div class="name-prefix">// PROFILE_INIT ::
-              ENGINEER_CLASS=PRINCIPAL</div>
+              ENGINEER_CLASS=PLATFORM</div>
             <h1>HUY <span>(QUOC)</span><br>NGUYEN</h1>
             <div class="title-line">
-              <strong>Principal · Lead Full-Stack Engineer</strong>
-              &nbsp;·&nbsp;<br> 14+ Years Delivering High-Impact Systems
+              <strong>Frontend Platform Engineer</strong>
+              &nbsp;·&nbsp;<br> Design Systems · Component Architecture
             </div>
           </div>
           <div class="contact-panel">
@@ -803,16 +877,16 @@ footer span { color: var(--neon-g); }
           <div class="stat-label">Years Experience</div>
         </div>
         <div class="stat-cell">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Client Countries</div>
+        </div>
+        <div class="stat-cell">
           <div class="stat-num">150+</div>
           <div class="stat-label">Eng Org Scale</div>
         </div>
         <div class="stat-cell">
-          <div class="stat-num">ZERO</div>
-          <div class="stat-label">Production Incidents</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">∞</div>
-          <div class="stat-label">Unicorn Built</div>
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Core Technologies</div>
         </div>
       </div>
 
@@ -823,22 +897,57 @@ footer span { color: var(--neon-g); }
         <div class="sec-head-num">[01]</div>
       </div>
       <div class="summary-block">
-        <p>
-          Principal-level full-stack engineer with <span class="accent">14+
-            years</span> delivering high-impact systems at scale across fintech,
-          creative marketplaces, and enterprise domains.
-          Pioneered <span class="highlight">early Webpack 5 Module
-            Federation</span> adoption in a <span class="accent">150+ engineer
-            organization</span>, successfully decomposing a large monolith React
-          SPA into independent micro frontends with <span class="highlight">zero
-            production incidents</span>.
-          Excel at <span class="accent">performance-critical frontend
-            architecture</span>, modern Node/TypeScript backends, cloud-native
-          delivery, and mentoring teams through complex migrations.
-          Proven ability to balance technical excellence with business velocity.
-          Known for writing high-quality code daily while simultaneously owning
-          team leadership, cross-org standards, and infrastructure.
-        </p>
+        <ul
+          style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+          <li style="padding-left: 1.2em; position: relative;">
+            <span style="position:absolute;left:0;color:var(--neon-g);">▸</span>
+            <span class="accent">14+ years</span> building frontend platforms —
+            design token layers, component libraries, micro frontend
+            architectures, and the tooling that keeps teams moving
+            independently. Pioneered
+            <span class="highlight">Webpack 5 Module Federation</span> in
+            production at a <span class="accent">150+ engineer fintech
+              org</span>, decomposing a React monolith into independently
+            deployable modules with a <span class="highlight">three-layer design
+              system</span> (primitive palette → semantic tokens → components).
+          </li>
+          <li style="padding-left: 1.2em; position: relative;">
+            <span style="position:absolute;left:0;color:var(--neon-g);">▸</span>
+            The stack runs deeper than the frontend. Early career spent as an
+            <span class="accent">enterprise CMS architect</span> — extending
+            <span class="highlight">Sitecore, Episerver/Optimizely, and
+              Umbraco</span> at the DLL level on
+            <span class="highlight">C# / .NET</span>, building custom REST APIs,
+            optimizing Solr/Lucene indexing, and owning full CMS ecosystems for
+            global clients. Later expanded into Python-based CMS stacks —
+            <span class="highlight">Django / Wagtail</span> — and modern
+            headless platforms including <span class="highlight">Strapi</span>
+            and <span class="highlight">Payload</span>.
+            That backend fluency across SQL Server, .NET Core, Python, and Azure
+            still informs every architecture decision today.
+          </li>
+          <li style="padding-left: 1.2em; position: relative;">
+            <span style="position:absolute;left:0;color:var(--neon-g);">▸</span>
+            Operates at the leading edge of
+            <span class="accent">AI-augmented engineering</span> — using
+            <span class="highlight">Claude Code</span> not as autocomplete but
+            as a disciplined collaborator: running multiple parallel
+            AI-assisted projects across different domains simultaneously,
+            applying AI at the
+            <span class="highlight">architecture and decision layer</span>
+            (design analysis, multi-file refactors, tech stack evaluation),
+            and integrating it into the full git and PR workflow. Maintains
+            sharp human judgment over correctness, quality, and taste at every
+            step — redirecting, verifying, and owning all technical decisions.
+            Also invests in
+            <span class="accent">optimizing the human-AI loop itself</span>:
+            authoring CLAUDE.md context files, tuning persistent memory
+            systems, and configuring session tooling — so every session starts
+            with full project context and minimal friction. The result:
+            solo delivery cycles that compress what would otherwise require a
+            team.
+          </li>
+        </ul>
       </div>
 
       <!-- KEY ACHIEVEMENTS -->
@@ -849,14 +958,15 @@ footer span { color: var(--neon-g); }
       </div>
       <div class="achievements-grid" style="margin-bottom: 48px;">
         <div class="ach-card">
-          <span class="ach-icon">⚡</span>
-          <div class="ach-title">ZERO INCIDENTS</div>
-          <div class="ach-desc">Shipped production Micro Frontend architecture
-            at Xendit across a 150-engineer org with zero post-launch production
-            incidents.</div>
+          <span class="ach-icon"><i data-lucide="hexagon"></i></span>
+          <div class="ach-title">FULL-STACK RANGE</div>
+          <div class="ach-desc">Spans the full stack in practice, not just on
+            paper — frontend architecture, backend APIs, cloud infrastructure,
+            and data pipelines across JavaScript/TypeScript, Python, Ruby, and
+            .NET Core.</div>
         </div>
         <div class="ach-card">
-          <span class="ach-icon">🗄️</span>
+          <span class="ach-icon"><i data-lucide="monitor-cog"></i></span>
           <div class="ach-title">CMS ARCHITECT</div>
           <div class="ach-desc">Deep customization of Sitecore, Episerver,
             Umbraco, Wagtail, Sanity, and Strapi across enterprise and startup
@@ -864,28 +974,28 @@ footer span { color: var(--neon-g); }
             ecosystems end-to-end.</div>
         </div>
         <div class="ach-card">
-          <span class="ach-icon">🚀</span>
+          <span class="ach-icon"><i data-lucide="sparkles"></i></span>
           <div class="ach-title">EARLY ADOPTER</div>
           <div class="ach-desc">Among the first engineers globally to ship
             Webpack 5 Module Federation in production — during its early beta
             era in 2021.</div>
         </div>
         <div class="ach-card">
-          <span class="ach-icon">🏗️</span>
+          <span class="ach-icon"><i data-lucide="blocks"></i></span>
           <div class="ach-title">MONOLITH → MFE</div>
           <div class="ach-desc">Decomposed a CRA monolith SPA into independently
             deployable MFE modules, unlocking true team autonomy and accelerated
             feature velocity.</div>
         </div>
         <div class="ach-card">
-          <span class="ach-icon">📦</span>
+          <span class="ach-icon"><i data-lucide="package"></i></span>
           <div class="ach-title">BUNDLE PERF</div>
           <div class="ach-desc">Led org-wide bundle optimization program at
             Xendit using lazy-loading, tree-shaking & code splitting across
             merchant dashboard.</div>
         </div>
         <div class="ach-card">
-          <span class="ach-icon">🌐</span>
+          <span class="ach-icon"><i data-lucide="vector-square"></i></span>
           <div class="ach-title">MULTI-DOMAIN</div>
           <div class="ach-desc">Delivered high-impact solutions across fintech
             unicorns, creative asset marketplaces, loyalty platforms, and
@@ -903,6 +1013,49 @@ footer span { color: var(--neon-g); }
       <div class="two-col">
         <!-- EXPERIENCE COLUMN -->
         <div>
+          <!-- Freelance / Open-Source -->
+          <div class="exp-block">
+            <div class="job-card accent-y">
+              <div class="job-top">
+                <div class="job-title">Freelance Engineer &amp; Open-Source
+                  Contributor</div>
+                <div class="job-badge">CURRENT</div>
+              </div>
+              <div class="job-meta">
+                <span class="company">INDEPENDENT · Self-directed</span>
+                <span>JAN 2026 – PRESENT</span>
+                <span>[REMOTE]</span>
+              </div>
+              <ul class="job-bullets">
+                <li>Contributing to an open-source <strong>serverless eCommerce
+                    engine</strong> built with pure Web Components — zero
+                  runtime dependencies, deployable to Netlify/Vercel/S3,
+                  supporting 19 locales and multi-currency (fiat + on-chain
+                  crypto).</li>
+                <li>Independently designed and implemented a <strong>three-layer
+                    design token system</strong> (primitive palette → semantic
+                  tokens → component styles) with no designer involvement;
+                  enforced across the full component library.</li>
+                <li>Built atomic UI components from scratch: filterable catalog
+                  with keyboard-navigable autocomplete, DeFi pool explorer with
+                  keyed DOM diffing (anti-flicker), WebAuthn passkey auth UI,
+                  and DeFi swap form.</li>
+                <li>Self-taught <strong>blockchain/DeFi domain</strong>
+                  (Uniswap, on-chain pricing, wallet derivation, GunDB P2P sync)
+                  to implement correct UI semantics without external
+                  guidance.</li>
+              </ul>
+              <div class="job-tags">
+                <span class="jt">Web Components</span><span class="jt">Vanilla
+                  JS</span><span class="jt">Shadow DOM</span>
+                <span class="jt">Design Systems</span><span class="jt">CSS
+                  Custom Properties</span>
+                <span class="jt">DeFi / Web3</span><span
+                  class="jt">WebAuthn</span><span class="jt">Serverless</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Envato -->
           <div class="exp-block">
             <div class="job-card">
@@ -913,7 +1066,7 @@ footer span { color: var(--neon-g); }
               <div class="job-meta">
                 <span class="company">ENVATO · Creative Asset Marketplace</span>
                 <span>SEP 2024 – DEC 2025</span>
-                <span>REMOTE</span>
+                <span>[REMOTE]</span>
               </div>
               <ul class="job-bullets">
                 <li>Lead agile team as <strong>Scrum Master</strong>; facilitate
@@ -955,7 +1108,7 @@ footer span { color: var(--neon-g); }
                 <span class="company">XENDIT · Fintech Unicorn (Series B →
                   Unicorn)</span>
                 <span>MAR 2021 – MAR 2024</span>
-                <span>REMOTE</span>
+                <span>[REMOTE]</span>
               </div>
               <ul class="job-bullets">
                 <li>Architected and shipped <strong>production-grade Micro
@@ -963,10 +1116,11 @@ footer span { color: var(--neon-g); }
                   beta era) on a CRA-based monolith React SPA; decomposed large
                   frontend into independently deployable modules for a 150+
                   engineer organization.</li>
-                <li>Achieved <strong>zero production incidents</strong>
-                  post-launch; enabled true team autonomy, reduced cross-team
-                  dependencies, accelerated feature velocity, and simplified
-                  React version upgrades across all modules.</li>
+                <li>Shipped and maintained <strong>incident-free MFE
+                    layer</strong>
+                  post-launch; enabled independent deployments across all
+                  modules, reduced cross-team dependencies, accelerated feature
+                  velocity, and simplified React version upgrades.</li>
                 <li>Led org-wide <strong>frontend standards</strong>, technical
                   roadmap, and performance programme; owned merchant dashboard
                   optimizations including bundle size reduction, lazy-loading,
@@ -1241,4 +1395,21 @@ footer span { color: var(--neon-g); }
       <!-- FOOTER -->
       <footer>
         <span>HUY_NGUYEN.CV // 2026</span>
-        <span>SENIOR/PRINCIPAL · FULL-STACK
+      </footer>
+    </div>
+    <script>
+      (function() {
+        var btn = document.getElementById('themeToggle');
+        var root = document.documentElement;
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light') { root.classList.add('light'); btn.textContent = '◑ DARK'; }
+        btn.addEventListener('click', function() {
+          var isLight = root.classList.toggle('light');
+          btn.textContent = isLight ? '◑ DARK' : '◑ LIGHT';
+          localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+      })();
+    </script>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>
