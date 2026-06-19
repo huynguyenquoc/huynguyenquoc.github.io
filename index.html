@@ -1402,7 +1402,7 @@ footer span { color: var(--neon-g); }
         var btn = document.getElementById('themeToggle');
         var root = document.documentElement;
         var stored = localStorage.getItem('theme');
-        if (stored === 'light') { root.classList.add('light'); btn.textContent = '◑ DARK'; }
+        if (stored !== 'dark') { root.classList.add('light'); btn.textContent = '◑ DARK'; }
         btn.addEventListener('click', function() {
           var isLight = root.classList.toggle('light');
           btn.textContent = isLight ? '◑ DARK' : '◑ LIGHT';
